@@ -4,6 +4,10 @@ import { loadFromStorage, cart } from "../../data/cart.js";
 describe('Test suite: renderOrderSummary', () => {
   const product1 = 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6';
   const product2 = '15b6fc6f-327a-4ec4-896f-486349e85a3d';
+  const productname1 = "Black and Gray Athletic Cotton Socks - 6 Pairs";
+  const productname2 = "Intermediate Size Basketball";
+  const priceCents1 = 10.90;
+  const priceCents2 = 20.95;
 
   beforeEach(() => {
     spyOn(localStorage,'setItem');
@@ -53,6 +57,22 @@ describe('Test suite: renderOrderSummary', () => {
     expect(
       document.querySelector(`.js-product-quantity-${product2}`).innerText
     ).toContain('Quantity: 1');
+
+    expect(
+      document.querySelector(`.js-product-name-${product1}`).innerText
+    ).toContain(productname1);
+
+    expect(
+      document.querySelector(`.js-product-name-${product2}`).innerText
+    ).toContain(productname2);
+
+    expect(
+      document.querySelector(`.js-product-price-${product1}`).innerText
+    ).toContain(`$${priceCents1}`);
+
+    expect(
+      document.querySelector(`.js-product-price-${product2}`).innerText
+    ).toContain(`$${priceCents2}`);
   });
 
   it('Removes a product', () => {
@@ -70,7 +90,14 @@ describe('Test suite: renderOrderSummary', () => {
       document.querySelector(`.js-cart-item-container-${product2}`)
     ).not.toEqual(null);
 
+    expect(
+      document.querySelector(`.js-product-name-${product2}`).innerText
+    ).toContain(productname2);
+
     expect(cart.length).toEqual(1);
     expect(cart[0].productId).toEqual(product2);
+    expect(
+      document.querySelector(`.js-product-price-${product2}`).innerText
+    ).toContain(`$${priceCents2}`);
   });
 });
